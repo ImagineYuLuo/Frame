@@ -7,10 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MovePanel extends JPanel implements Runnable{
-
     static final int originalTitleSize = 16;
     static final int scale = 3;
     static final int titleSize = originalTitleSize * scale; // 48*48
+    static final int enemySize = 16;
     static final int maxScreenColumns = 16;
     static final int maxScreenRows = 8;
     public static final int screenWidth = titleSize * maxScreenColumns;
@@ -25,7 +25,11 @@ public class MovePanel extends JPanel implements Runnable{
     static int playerY = 100;
     static int playerSpeed = 4;
 
+    public static int enemyX = 600;
+    public static int enemyY = screenHeight / 2;
+
     private static JLabel displayFps = null;
+    private static JLabel displayPosition = null;
 
     public MovePanel(){
         setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -50,6 +54,23 @@ public class MovePanel extends JPanel implements Runnable{
             }
         }
         return displayFps;
+    }
+
+    public static JLabel getDisplayPosition(){
+        if (displayPosition == null){
+            try{
+                displayPosition = new JLabel();
+                displayPosition.setName("DisplayPosition");
+                displayPosition.setBounds(10, 25, 200, 20);
+                displayPosition.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+                displayPosition.setHorizontalAlignment(SwingConstants.LEFT);
+                displayPosition.setForeground(Color.WHITE);
+                displayPosition.setText("Location:" + playerX + " " + playerY);
+            }catch (Throwable ex){
+                SwingUtils.showErrorPopup(ex);
+            }
+        }
+        return displayPosition;
     }
 
     public void startGameThread(){
@@ -87,15 +108,39 @@ public class MovePanel extends JPanel implements Runnable{
 
     public void update(){
         if(keyHandler.upPressed){
-            playerY = (playerY >= 4)?playerY - playerSpeed:0;
+            if(playerY - enemySize <= enemyY){
+                if(playerX >= enemyX + enemySize || playerX <= enemyX - titleSize || playerY + titleSize - enemySize <= enemyY){
+                    playerY = (playerY >= 4)?playerY - playerSpeed:0;
+                }
+            }else{
+                playerY = (playerY >= 4)?playerY - playerSpeed:0;
+            }
         }else if(keyHandler.downPressed){
-            playerY = (playerY <= screenHeight - titleSize - 4)?playerY + playerSpeed:screenHeight - titleSize;
+            if(playerY + titleSize >= enemyY ){
+                if(playerX >= enemyX + enemySize || playerX <= enemyX - titleSize || playerY + titleSize - enemySize >= enemyY){
+                    playerY = (playerY <= screenHeight - titleSize - 4)?playerY + playerSpeed:screenHeight - titleSize;
+                }
+            }else{
+                playerY = (playerY <= screenHeight - titleSize - 4)?playerY + playerSpeed:screenHeight - titleSize;
+            }
         }else if(keyHandler.leftPressed){
-            playerX = (playerX >= 4)?playerX - playerSpeed:0;
+            if(playerX - enemySize <= enemyX){
+                if(playerY >= enemyY + enemySize || playerY <= enemyY - titleSize || playerX + titleSize - enemySize <= enemyX){
+                    playerX = (playerX >= 4)?playerX - playerSpeed:0;
+                }
+            }else{
+                playerX = (playerX >= 4)?playerX - playerSpeed:0;
+            }
         }else if(keyHandler.rightPressed){
-            playerX = (playerX <= screenWidth - titleSize - 4)?playerX + playerSpeed:screenWidth - titleSize;
+            if(playerX + titleSize >= enemyX){
+                if(playerY >= enemyY + enemySize || playerY <= enemyY - titleSize || playerX + titleSize - enemySize >= enemyX){
+                    playerX = (playerX <= screenWidth - titleSize - 4) ? playerX + playerSpeed : screenWidth - titleSize;
+                }
+            }else{
+                playerX = (playerX <= screenWidth - titleSize - 4)?playerX + playerSpeed:screenWidth - titleSize;
+            }
         }
-        //System.out.println(playerX + " " + playerY);
+        displayPosition.setText("Location:" + playerX + " " + playerY);
     }
 
     public void paintComponent(Graphics graphics){
@@ -105,10 +150,9 @@ public class MovePanel extends JPanel implements Runnable{
         graphics2D.setColor(Color.WHITE);
         graphics2D.fillRect(playerX, playerY, titleSize, titleSize);
 
-
         Graphics2D enemy1 = (Graphics2D) graphics;
         enemy1.setColor(Color.CYAN);
-        enemy1.fillRect(384, 214, 16, 16);
+        enemy1.fillRect(enemyX, enemyY, enemySize, enemySize);
 
         graphics2D.dispose();
         enemy1.dispose();
