@@ -88,29 +88,13 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 panelBottom.setLayout(null);
                 //panelBottom.add(getLabelSetting(), getLabelSetting().getName());
                 panelBottom.add(MovePanel.getDisplayFps(), MovePanel.getDisplayFps().getName());
+                panelBottom.add(MovePanel.getDisplayPosition(), MovePanel.getDisplayPosition().getName());
             }catch(Throwable ex){
                 SwingUtils.showErrorPopup(ex);
             }
         }
         return panelBottom;
     }
-
-//    private JLabel getLabelSetting(){
-//        if(labelSetting == null){
-//            try{
-//                labelSetting = new JLabel();
-//                labelSetting.setName("Setting");
-//                labelSetting.setBounds(5, 5, 150, 20);
-//                labelSetting.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
-//                labelSetting.setHorizontalAlignment(SwingConstants.CENTER);
-//                labelSetting.setForeground(Color.WHITE);
-//                labelSetting.setText("Setting[ESC]");
-//            }catch (Throwable ex){
-//                SwingUtils.showErrorPopup(ex);
-//            }
-//        }
-//        return labelSetting;
-//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
