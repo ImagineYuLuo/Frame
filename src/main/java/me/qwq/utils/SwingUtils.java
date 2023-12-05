@@ -25,4 +25,6 @@ public class SwingUtils {
         errorScrollPane.setPreferredSize(new Dimension(600, 400));
         JOptionPane.showMessageDialog(null, errorScrollPane, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+
 }
