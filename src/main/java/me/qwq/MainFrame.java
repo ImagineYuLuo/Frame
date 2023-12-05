@@ -1,6 +1,6 @@
 package me.qwq;
 
-import me.qwq.panel.MovePanel;
+import me.qwq.panel.GamePanel;
 import me.qwq.utils.SwingUtils;
 
 import javax.swing.*;
@@ -16,13 +16,13 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     private JPanel panelBottom = null;
     public static JPanel totalContentPane = null;
 
-    MovePanel movePanel = new MovePanel();
+    GamePanel gamePanel = new GamePanel();
 
     private static final int w = 32;
     private static final int h = 192;
 
-    private static final int TOTAL_WIDTH = MovePanel.screenWidth + w;
-    private static final int TOTAL_HEIGHT = MovePanel.screenHeight + h;
+    private static final int TOTAL_WIDTH = GamePanel.screenWidth + w;
+    private static final int TOTAL_HEIGHT = GamePanel.screenHeight + h;
 
     public MainFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,6 +32,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         setContentPane(getPanelContentPane());
         getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
         getContentPane().setBackground(Color.WHITE);
+
     }
 
     public static void main(String[] args) {
@@ -68,8 +69,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 panelCenter = new JPanel();
                 panelCenter.setName("PanelCenter");
                 panelCenter.setBackground(Color.WHITE);
-                panelCenter.add(movePanel);
-                movePanel.startGameThread();
+                panelCenter.add(gamePanel);
+                gamePanel.startGameThread();
             }catch(Throwable ex){
                 SwingUtils.showErrorPopup(ex);
             }
@@ -86,9 +87,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 panelBottom.setBackground(Color.DARK_GRAY);
                 panelBottom.setPreferredSize(new Dimension(TOTAL_WIDTH-w, w*4-2));
                 panelBottom.setLayout(null);
-                //panelBottom.add(getLabelSetting(), getLabelSetting().getName());
-                panelBottom.add(MovePanel.getDisplayFps(), MovePanel.getDisplayFps().getName());
-                panelBottom.add(MovePanel.getDisplayPosition(), MovePanel.getDisplayPosition().getName());
+                panelBottom.add(GamePanel.getDisplayFps(), GamePanel.getDisplayFps().getName());
+                panelBottom.add(GamePanel.getDisplayPosition(), GamePanel.getDisplayPosition().getName());
             }catch(Throwable ex){
                 SwingUtils.showErrorPopup(ex);
             }
