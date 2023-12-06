@@ -31,7 +31,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         setSize(TOTAL_WIDTH, TOTAL_HEIGHT);
         setContentPane(getPanelContentPane());
         getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.BLACK);
 
     }
 
@@ -68,7 +68,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
             try{
                 panelCenter = new JPanel();
                 panelCenter.setName("PanelCenter");
-                panelCenter.setBackground(Color.WHITE);
+                panelCenter.setBackground(Color.BLACK);
                 panelCenter.add(gamePanel);
                 gamePanel.startGameThread();
             }catch(Throwable ex){
@@ -125,4 +125,5 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
 }
