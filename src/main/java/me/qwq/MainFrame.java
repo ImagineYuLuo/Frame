@@ -32,7 +32,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         setContentPane(getPanelContentPane());
         getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
         getContentPane().setBackground(Color.BLACK);
-
     }
 
     public static void main(String[] args) {
