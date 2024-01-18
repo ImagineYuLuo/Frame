@@ -19,7 +19,3 @@ jar{
         attributes 'Main-Class': 'me.qwq.MainFrame'
     }
 }
-
-test {
-    useJUnitPlatform()
-}
