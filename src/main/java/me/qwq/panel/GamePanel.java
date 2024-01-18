@@ -107,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable{
                 displayFps.setText("FPS:" + drawCount);
                 drawCount = 0;
                 timer = 0;
+                System.out.println(delta);
             }
         }
     }
